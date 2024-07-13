@@ -1,7 +1,8 @@
-import profileAvatar from './images/profile__avatar.png';
-import profileAvatarEditIcon from './images/Edit__Button.png';
-import editButtonIcon from './images/Edit__Button.png';
-import addButtonIcon from './images/add__Button.png';
+import profileAvatar from '../images/profile__avatar.png';
+import profileAvatarEditIcon from '../images/Edit__Button.png';
+import editButtonIcon from '../images/Edit__Button.png';
+import addButtonIcon from '../images/add__Button.png';
+
 
 function Main() {
     return (
