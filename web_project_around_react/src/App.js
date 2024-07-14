@@ -1,17 +1,88 @@
-
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
-
-
+import PopupWithForm from './components/PopupWithForm';
 import closeIcon from './images/Close__Icon.png';
 
+
+
+
 function App() {
+   
+const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+
+const closeAllPopups = () => {
+  setEditProfilePopupOpen(false);
+  setAddPlacePopupOpen(false);
+  setEditAvatarPopupOpen(false);
+}
+
+const handleEditAvatarClick = () => {
+  setEditAvatarPopupOpen(true);
+};
+
+const handleEditProfileClick = () => {
+  setEditProfilePopupOpen(true);
+};
+
+const handleAddPlaceClick = () => {
+  setAddPlacePopupOpen(true);
+}
+
   return (
     <div className="page">
       <Header />
-      <Main />
-      <Footer />
+      <Main 
+        onEditProfile = {handleEditProfileClick}
+        onAddPlace = {handleAddPlaceClick}
+        onEditAvatar = {handleEditAvatarClick}
+      />
+
+      <Footer /> 
+
+      <PopupWithForm  
+        name="profile"
+        title="Edit profile"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        formId="profile-form"
+        buttonText="Save"
+        >
+          <input className = "popup__input popup__input-name" id="profile-input-name" type='text' name='name' minLength='2' maxLength='40' placeholder='First name, Last name' />
+          <span className="popup-error profile-input-name-error" ></span>
+          <input className = 'popup__input popup__input-about' id='profile-input-about' type='text' name='about' minLength='2'maxLength='200' placeholder='Occupation' />
+          <span className='popup-error profile-input-about-error'></span>
+        </PopupWithForm>
+
+        <PopupWithForm 
+          name='add-card'
+          title='New Place'
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          formId='addcard-form'
+          buttonText='Create'
+          >
+            <input className='popup__input popup__input-name' id='input-card-title' type='text' minLength='2' maxLength='30' placeholder='Title' />
+            <span className='popup-error input-card-title-error'></span>
+            <input className='popup__input popup__input-about' id='input-card-url' type='text' placeholder='url'/>
+            <span className='poopup-error input-card-url-error'></span>
+                      </PopupWithForm>
+
+          <PopupWithForm 
+            name='update-avatar'
+            title='Change profile picture'
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            formId='update-avatar-form'
+            buttonText='Save'
+            >
+              <input className='popup__input popup__input-about' id='input-avatar-url' type='text' placeholder='image url' />
+              <span className='popup-error input-avatar-url-error'></span>
+            </PopupWithForm>
+
     <div className="popup" id="popup-profile">
       <div className="popup__close-button">
         <img src={closeIcon} alt="close form button" id="close-profile-form" />
