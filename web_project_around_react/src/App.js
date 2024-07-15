@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
 import PopupWithForm from './components/PopupWithForm';
+import PopUpImage from './components/PopUpImage';
 import closeIcon from './images/Close__Icon.png';
 
 
@@ -13,12 +14,8 @@ function App() {
 const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
 const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+const [selectedCard, setSelectedCard] = useState(null);
 
-const closeAllPopups = () => {
-  setEditProfilePopupOpen(false);
-  setAddPlacePopupOpen(false);
-  setEditAvatarPopupOpen(false);
-}
 
 const handleEditAvatarClick = () => {
   setEditAvatarPopupOpen(true);
@@ -32,6 +29,17 @@ const handleAddPlaceClick = () => {
   setAddPlacePopupOpen(true);
 }
 
+const handleCardClick = (card) => {
+  setSelectedCard(card);
+}
+
+const closeAllPopups = () => {
+  setEditProfilePopupOpen(false);
+  setAddPlacePopupOpen(false);
+  setEditAvatarPopupOpen(false);
+  setSelectedCard(null);
+};
+
   return (
     <div className="page">
       <Header />
@@ -39,6 +47,7 @@ const handleAddPlaceClick = () => {
         onEditProfile = {handleEditProfileClick}
         onAddPlace = {handleAddPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
+        onCardClick = {handleCardClick}
       />
 
       <Footer /> 
@@ -82,6 +91,8 @@ const handleAddPlaceClick = () => {
               <input className='popup__input popup__input-about' id='input-avatar-url' type='text' placeholder='image url' />
               <span className='popup-error input-avatar-url-error'></span>
             </PopupWithForm>
+
+            <PopUpImage card={selectedCard} onClose={closeAllPopups} />
 
     <div className="popup" id="popup-profile">
       <div className="popup__close-button">
@@ -149,4 +160,5 @@ const handleAddPlaceClick = () => {
   </div>
 );
 }
+
 export default App;
