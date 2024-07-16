@@ -1,3 +1,6 @@
+import React, {useState , useEffect} from'react';
+import api from '../utils/api.js';
+
 import profileAvatar from '../images/profile__avatar.png';
 import profileAvatarEditIcon from '../images/Edit__Button.png';
 import editButtonIcon from '../images/Edit__Button.png';
@@ -5,23 +8,35 @@ import addButtonIcon from '../images/add__Button.png';
 
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-    const cards = [];
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
+
+    useEffect(() => {
+        api.getUserInfo()
+          .then((userData) => {
+            setUserName(userData.name);
+            setUserDescription(userData.about);
+            setUserAvatar(userData.avatar);
+          })
+          .catch((err) => console.log(err));
+    }, []);
 
     return (
     <div className="page">
         <div className="profile">
-      <div className="profile__avatar-content">
-        <img className="profile__avatar" src={profileAvatar} alt="Jacques Cousteau" />
+      <div className="profile__avatar-content" >
+        <img className="profile__avatar" src={userAvatar} alt="Jacques Cousteau" style={{ backgroundImage: `url(${userAvatar})`}}  />
         <img className="profile__avatar-edit-icon" src={profileAvatarEditIcon} alt="Edit Avatar" onClick={onEditAvatar} />
       </div>
       <div className="profile__info">
         <div className="profile__title">
-          <h2 className="profile__name" id="profile-name">Jacques Cousteau</h2>
+          <h2 className="profile__name" id="profile-name">{userName}</h2>
           <div className="profile__edit-button" id="profile-edit-button" onClick={onEditProfile}>
             <img src={editButtonIcon} alt="Edit your profile button" />
           </div>
         </div>
-        <h3 className="profile__about" id="profile-about">Explorer</h3>
+        <h3 className="profile__about" id="profile-about">{userDescription}</h3>
       </div>
       <div className="profile__add-button" id="profile-add-button" onClick={onAddPlace}>
         <img src={addButtonIcon} alt="Add image to your profile button" />
