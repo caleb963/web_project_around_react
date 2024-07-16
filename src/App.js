@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Footer from './components/Footer';
 import PopupWithForm from './components/PopupWithForm';
-import PopUpImage from './components/PopUpImage';
+import ImagePopup from './components/ImagePopup';
 import closeIcon from './images/Close__Icon.png';
 
 
@@ -49,7 +49,7 @@ const closeAllPopups = () => {
         onEditAvatar = {handleEditAvatarClick}
         onCardClick = {handleCardClick}
       />
-      <PopUpImage card={selectedCard} onClose={closeAllPopups}/>
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
       <Footer /> 
 
@@ -93,7 +93,7 @@ const closeAllPopups = () => {
               <span className='popup-error input-avatar-url-error'></span>
             </PopupWithForm>
 
-            <PopUpImage card={selectedCard} onClose={closeAllPopups} />
+            <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
     <div className="popup" id="popup-profile">
       <div className="popup__close-button">

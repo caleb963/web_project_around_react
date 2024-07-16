@@ -1,6 +1,6 @@
 import closeIcon from '../images/Close__Icon.png';
 
-function PopUpImage({card, onClose}) {
+function ImagePopup({card, onClose}) {
   return (
     <div className = {`popup popup_type_image ${card ? 'popup__opener' : ''}`}>
          <div className='popup__image-container'>
@@ -15,4 +15,4 @@ function PopUpImage({card, onClose}) {
   );
 }
 
-export default PopUpImage;
+export default ImagePopup;
