@@ -49,6 +49,7 @@ const closeAllPopups = () => {
         onEditAvatar = {handleEditAvatarClick}
         onCardClick = {handleCardClick}
       />
+      <PopUpImage card={selectedCard} onClose={closeAllPopups}/>
 
       <Footer /> 
 

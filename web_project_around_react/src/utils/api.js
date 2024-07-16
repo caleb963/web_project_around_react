@@ -20,6 +20,14 @@ class Api {
 
         }).then(this._handleResponse);
     }
+
+    getCards() {
+        return fetch(`${this._adress}/v1/${this._groupId}/cards`, {
+            headers: {
+                authorization: this._token,
+            },
+        }).then(this._handleResponse);
+    }
 }
 
 const api = new Api({

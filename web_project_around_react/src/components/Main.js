@@ -1,6 +1,6 @@
 import React, {useState , useEffect} from'react';
 import api from '../utils/api.js';
-
+import Card from './Card.js';
 import profileAvatar from '../images/profile__avatar.png';
 import profileAvatarEditIcon from '../images/Edit__Button.png';
 import editButtonIcon from '../images/Edit__Button.png';
@@ -11,6 +11,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
     const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         api.getUserInfo()
@@ -20,6 +21,12 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
             setUserAvatar(userData.avatar);
           })
           .catch((err) => console.log(err));
+
+          api.getCards()
+            .then((cardData) => {
+                setCards(cardData);
+            })
+            .catch((err) => console.log(err));
     }, []);
 
     return (
@@ -43,21 +50,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       </div>
     </div>
     <section className="elements">
-      <template className="template__card">
-        <div className="elements__card">
-          <img className="elements__card-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="image of card" />
-          <button className="elements__card-delete">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Delete card" />
-          </button>
-          <div className="elements__card-description">
-            <h2 className="elements__card-title"></h2>
-            <button className="elements__card-heart">
-              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="heart" />
-            </button>
-            <span className="elements__card-like-count">0</span>
-          </div>
-        </div>
-      </template>
+        {cards.map((card) => (
+          <Card key={card._id} card={card} onCardClick={onCardClick} />
+        ))}
     </section>
     </div>
     );
