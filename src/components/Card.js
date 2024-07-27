@@ -1,5 +1,21 @@
+import React, {useContext} from 'react';
+import CurrentUserContext from './CurrentUserContext.js';
 
 function Card({ card, onCardClick}) {
+const currentUser = useContext(CurrentUserContext);
+
+// class for the button to delete the card
+const isOwn = card.owner._id === currentUser._id;
+
+// class for the delete button
+const cardDeleteButtonClassName = `card__delete-button ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`;
+
+// verify if the current user has like the card 
+const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+// class for the like button
+const cardLikeButtonClassName = `card__heart ${isLiked ? 'card__heart_active' : ''}`;
+
     function handleClick() {
         onCardClick(card);
     }
@@ -10,12 +26,12 @@ function Card({ card, onCardClick}) {
         className="elements__card-image" 
         style={{ backgroundImage: ` url(${card.link})`}}
         onClick= {handleClick} />
-        <button className="elements__card-delete">
+        <button className={cardDeleteButtonClassName}>
             <img  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Delete card" />
             </button>
             <div className="elements__card-description">
                 <h2 className="elements__card-title">{card.name}</h2>
-                <button className="elements__card-heart">
+                <button className= {cardLikeButtonClassName}>
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="heart" />
                 </button>
                 <span className="elements__card-like-count">{card.likes.length}</span>
