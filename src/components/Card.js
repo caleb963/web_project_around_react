@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import CurrentUserContext from './CurrentUserContext.js';
 
-function Card({ card, onCardClick}) {
+function Card({ card, onCardClick, onCardLike, onCardDelete}) {
 const currentUser = useContext(CurrentUserContext);
 
 // class for the button to delete the card
@@ -20,18 +20,26 @@ const cardLikeButtonClassName = `card__heart ${isLiked ? 'card__heart_active' : 
         onCardClick(card);
     }
 
+    function handleLikeClick() {
+        onCardLike(card);
+    }
+
+    function handleDeleteClick() {
+        onCardDelete(card);
+    }
+
     return(
         <div  className="elements__card">
         <div
         className="elements__card-image" 
         style={{ backgroundImage: ` url(${card.link})`}}
         onClick= {handleClick} />
-        <button className={cardDeleteButtonClassName}>
+        <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}>
             <img  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Delete card" />
             </button>
             <div className="elements__card-description">
                 <h2 className="elements__card-title">{card.name}</h2>
-                <button className= {cardLikeButtonClassName}>
+                <button className= {cardLikeButtonClassName} onClick={handleLikeClick}>
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="heart" />
                 </button>
                 <span className="elements__card-like-count">{card.likes.length}</span>

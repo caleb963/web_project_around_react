@@ -9,18 +9,20 @@ import CurrentUserContext from './CurrentUserContext.js';
 
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-    const [userName, setUserName] = useState('');
+  /* const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
-    const [userAvatar, setUserAvatar] = useState('');
-    const currentUser = useContext(CurrentUserContext); //use the content of the CurrentUserContext
+    const [userAvatar, setUserAvatar] = useState('');*/
+    const [currentUser,setCurrentUser] = useState(useContext(CurrentUserContext)); //use the content of the CurrentUserContext
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
         api.getUserInfo()
           .then((userData) => {
-            setUserName(userData.name);
+            /*setUserName(userData.name);
             setUserDescription(userData.about);
-            setUserAvatar(userData.avatar);
+            setUserAvatar(userData.avatar);*/
+            setCurrentUser(userData);
+
           })
           .catch((err) => console.log(err));
 
@@ -31,11 +33,29 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
             .catch((err) => console.log(err));
     }, []);
 
+    function handleCardLike(card) {
+      const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+      api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+    }
+
+    function handleCardDelete(card) {
+      if(card.owner._id === currentUser._id) {
+      api.deleteCard(card._id).then(() => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      });
+    } else {
+      console.log('You can only delete your own cards');
+    }
+  }
+
     return (
     <div className="page">
         <div className="profile">
       <div className="profile__avatar-content" >
-        <img className="profile__avatar" src={userAvatar} alt="Jacques Cousteau" style={{ backgroundImage: `url(${currentUser.avatar})`}}  />
+        <img className="profile__avatar" src={currentUser.avatar} alt="Jacques Cousteau" style={{ backgroundImage: `url(${currentUser.avatar})`}}  />
         <img className="profile__avatar-edit-icon" src={profileAvatarEditIcon} alt="Edit Avatar" onClick={onEditAvatar} />
       </div>
       <div className="profile__info">
@@ -53,7 +73,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
     </div>
     <section className="elements">
         {cards.map((card) => (
-          <Card key={card._id} card={card} onCardClick={onCardClick} />
+          <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
         ))}
     </section>
     </div>

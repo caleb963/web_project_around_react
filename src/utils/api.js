@@ -28,6 +28,25 @@ class Api {
             },
         }).then(this._handleResponse);
     }
+
+
+changeLikeCardStatus(cardId, isLiked) {
+return fetch(`${this._adress}/v1/${this._groupId}/cards/likes/${cardId}`, {
+    method: isLiked ? 'PUT' : 'DELETE',
+    headers: {
+        authorization: this._token,
+    },
+}).then(this._handleResponse);
+}
+
+deleteCard(cardId) {
+    return fetch(`${this._adress}/v1/${this._groupId}/cards/${cardId}`, {
+        method: 'DELETE', 
+        headers: {
+            authorization: this._token,
+        },
+    }).then(this._handleResponse);
+  }
 }
 
 const api = new Api({
