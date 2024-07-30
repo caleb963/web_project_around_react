@@ -7,6 +7,7 @@ import ImagePopup from './components/ImagePopup';
 import closeIcon from './images/Close__Icon.png';
 import CurrentUserContext from './components/CurrentUserContext';
 import api from './utils/api';
+import EditProfilePopup from './components/EditProfilePopup';
 
 
 
@@ -49,6 +50,15 @@ const closeAllPopups = () => {
   setSelectedCard(null);
 };
 
+const handleUpdateUser =(userData) => {
+  api.updateUserInfo(userData)
+    .then((updatedUserData) => {
+      setCurrentUser(updatedUserData);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(err));
+}
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
@@ -61,7 +71,13 @@ const closeAllPopups = () => {
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
-      <Footer /> 
+      <Footer />
+
+      <EditProfilePopup 
+      isOpen={isEditProfilePopupOpen}
+      onClose={closeAllPopups}
+      onUpdateUser={handleUpdateUser}
+      /> 
 
       <PopupWithForm  
         name="profile"
