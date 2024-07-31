@@ -8,13 +8,13 @@ const currentUser = useContext(CurrentUserContext);
 const isOwn = card.owner._id === currentUser._id;
 
 // class for the delete button
-const cardDeleteButtonClassName = `card__delete-button ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`;
+const cardDeleteButtonClassName = `elements__card-delete ${isOwn ? 'elements__card-delete' : 'elements__card-delete_hidden'}`;
 
 // verify if the current user has like the card 
 const isLiked = card.likes.some(i => i._id === currentUser._id);
 
 // class for the like button
-const cardLikeButtonClassName = `card__heart ${isLiked ? 'card__heart_active' : ''}`;
+const cardLikeButtonClassName = `elements__card-heart ${isLiked ? 'card__heart_active' : ''}`;
 
     function handleClick() {
         onCardClick(card);
