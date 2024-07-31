@@ -8,7 +8,7 @@ import closeIcon from './images/Close__Icon.png';
 import CurrentUserContext from './components/CurrentUserContext';
 import api from './utils/api';
 import EditProfilePopup from './components/EditProfilePopup';
-
+import EditAvatarPopup from './components/EditAvatarPopup';
 
 
 function App() {
@@ -59,6 +59,14 @@ const handleUpdateUser =(userData) => {
     .catch((err) => console.log(err));
 }
 
+const handleUpdateAvatar = (avatarData) => {
+  api.setUserAvatar(avatarData)
+    .then((updatedUserData) => {
+      setCurrentUser(updatedUserData);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(err));
+}
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
@@ -79,7 +87,13 @@ const handleUpdateUser =(userData) => {
       onUpdateUser={handleUpdateUser}
       /> 
 
-      <PopupWithForm  
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+      />
+
+      /*<PopupWithForm  
         name="profile"
         title="Edit profile"
         isOpen={isEditProfilePopupOpen}
@@ -92,6 +106,7 @@ const handleUpdateUser =(userData) => {
           <input className = 'popup__input popup__input-about' id='profile-input-about' type='text' name='about' minLength='2'maxLength='200' placeholder='Occupation' />
           <span className='popup-error profile-input-about-error'></span>
         </PopupWithForm>
+        */
 
         <PopupWithForm 
           name='add-card'
@@ -108,7 +123,7 @@ const handleUpdateUser =(userData) => {
                       </PopupWithForm>
 
           <PopupWithForm 
-            name='update-avatar'
+           name='update-avatar'
             title='Change profile picture'
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}

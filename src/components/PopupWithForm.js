@@ -1,4 +1,5 @@
 import closeIcon from '../images/Close__Icon.png';
+import React from 'react';
 
 function PopupWithForm({ isOpen, onClose, title, name, children, onSubmit, formId, buttonText }) {
     return (
