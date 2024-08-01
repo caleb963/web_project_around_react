@@ -86,7 +86,7 @@ addCard(data) {
           authorization: this._token, 
             'Content-Type' : 'application/json',
         },
-        bidy: JSON.stringify({
+        body: JSON.stringify({
             name: data.name,
             link: data.link,
         }),

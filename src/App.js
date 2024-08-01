@@ -115,6 +115,9 @@ const handleAddPlaceSubmit = (newCard) => {
         onAddPlace = {handleAddPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
         onCardClick = {handleCardClick}
+        card={cards}
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
