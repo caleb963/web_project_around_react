@@ -31,30 +31,34 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
     }
 
     return (
-        <PopupWithForm isOpen={isOpen} onClose={onClose} title="Edit profile" name="edit" onSubmit={handleSubmit} buttonText="Save">
+        <PopupWithForm isOpen={isOpen} onClose={onClose} title="Edit profile" name="edit" formId="profile-form" onSubmit={handleSubmit} buttonText="Save">
           <input
           type="text"
           name="name"
           value={name}
           onChange={handleNameChange}
-          className="popup__input_name"
+          className=" popup__input popup__input_name"
           placeholder="Name"
+          id="profile-input-name"
           required
           minLength="2"
           maxLength="40"
          />
+           <span className="popup-error profile-input-name-error" ></span>
          <input
            type="text"
            name="about"
            value={description}
            onChange={handleDescriptionChange}
-           className="popup__input_about"
+           className="poup__input popup__input_about"
+           id="profile-input-about"
            placeholder="About"
            required
               minLength="2"
               maxLength="200"
          />
-        <button type="submit" className="popup__input-submit">Save</button>
+           <span className='popup-error profile-input-about-error'></span>
+       
         </PopupWithForm>
     );
 }

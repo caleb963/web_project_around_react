@@ -21,18 +21,21 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             isOpen={isOpen}
             onClose={onClose}
             title="Change profile picture"
-            name="update-avatar"
+            formId="update-avatar"
+            name="update-avatar-form"
             onSubmit={handleSubmit}
+            buttonText="Save"
             >
             <input 
                 ref={avatarRef}
                 type="url"
                 name="avatar"
-                className="popup__input popup__input_avatar"
+                className="popup__input popup__input_about"
+                id="input-avatar-url"
                 placeholder="Image URL"
                 required
                 />
-            <button type="submit" className="popup__input-submit">Save</button>
+                  <span className='popup-error input-avatar-url-error'></span>
             </PopupWithForm>
 
     );
