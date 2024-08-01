@@ -19,17 +19,17 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
     <div className="page">
         <div className="profile">
       <div className="profile__avatar-content" >
-        <img className="profile__avatar" src={currentUser.avatar} alt="Jacques Cousteau" style={{ backgroundImage: `url(${currentUser.avatar})`}}  />
+        <img className="profile__avatar" src={currentUser?.avatar || ''} alt="Jacques Cousteau" style={{ backgroundImage: `url(${currentUser.avatar})`}}  />
         <img className="profile__avatar-edit-icon" src={profileAvatarEditIcon} alt="Edit Avatar" onClick={onEditAvatar} />
       </div>
       <div className="profile__info">
         <div className="profile__title">
-          <h2 className="profile__name" id="profile-name">{currentUser.name}</h2>
+          <h2 className="profile__name" id="profile-name">{currentUser?.name ||'Loading...'}</h2>
           <div className="profile__edit-button" id="profile-edit-button" onClick={onEditProfile}>
             <img src={editButtonIcon} alt="Edit your profile button" />
           </div>
         </div>
-        <h3 className="profile__about" id="profile-about">{currentUser.about}</h3>
+        <h3 className="profile__about" id="profile-about">{currentUser?.about || 'Loading...'}</h3>
       </div>
       <div className="profile__add-button" id="profile-add-button" onClick={onAddPlace}>
         <img src={addButtonIcon} alt="Add image to your profile button" />
@@ -38,7 +38,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onC
     <section className="elements">
         {cards?.length > 0 ? cards.map((card) => (
           <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete}/>
-        )) : <p>Nocards available.</p>}
+        )) : <p>No cards available.</p>}
     </section>
     </div>
     );
