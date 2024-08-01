@@ -66,7 +66,7 @@ updateUserInfo(data) {
 }
 
 setUserAvatar(data) {
-  return fetch(`${this._adress}/v1/${this.groupId}/users/me/avatar`, {
+  return fetch(`${this._adress}/v1/${this._groupId}/users/me/avatar`, {
     method: 'PATCH',
     headers: {
         authorization : this._token,

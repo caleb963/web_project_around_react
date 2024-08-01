@@ -37,7 +37,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
           name="name"
           value={name}
           onChange={handleNameChange}
-          className="popup__input__name "
+          className="popup__input_name"
           placeholder="Name"
           required
           minLength="2"
@@ -54,6 +54,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
               minLength="2"
               maxLength="200"
          />
+        <button type="submit" className="popup__input-submit">Save</button>
         </PopupWithForm>
     );
 }

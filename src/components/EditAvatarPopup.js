@@ -26,13 +26,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             >
             <input 
                 ref={avatarRef}
-                type="text"
+                type="url"
                 name="avatar"
-                className="popup__input"
-                placeholder="EnterImage URL"
+                className="popup__input popup__input_avatar"
+                placeholder="Image URL"
                 required
                 />
-            <button type="submit" className="popup__save-button">Save</button>
+            <button type="submit" className="popup__input-submit">Save</button>
             </PopupWithForm>
 
     );

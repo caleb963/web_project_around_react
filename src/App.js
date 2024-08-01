@@ -109,19 +109,7 @@ const handleUpdateAvatar = (avatarData) => {
             <span className='poopup-error input-card-url-error'></span>
                       </PopupWithForm>
 
-          <PopupWithForm 
-           name='update-avatar'
-            title='Change profile picture'
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            formId='update-avatar-form'
-            buttonText='Save'
-            >
-              <input className='popup__input popup__input-about' id='input-avatar-url' type='text' placeholder='image url' />
-              <span className='popup-error input-avatar-url-error'></span>
-            </PopupWithForm>
-
-            <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+       
 
   
   </div>
