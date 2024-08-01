@@ -77,8 +77,22 @@ setUserAvatar(data) {
     }),
         }).then(this._handleResponse);
   }
-}
 
+
+addCard(data) {
+    return fetch(`${this._adress}/v1/${this.groupId}/cards`, {
+        method: 'POST',
+        headers: {
+          authorization: this._token, 
+            'Content-Type' : 'application/json',
+        },
+        bidy: JSON.stringify({
+            name: data.name,
+            link: data.link,
+        }),
+    }).then(this._handleResponse);
+}
+}
 
 const api = new Api({
     adress: 'https://around.nomoreparties.co',

@@ -8,48 +8,12 @@ import addButtonIcon from '../images/add__Button.png';
 import CurrentUserContext from './CurrentUserContext.js';
 
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete}) {
   /* const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [userAvatar, setUserAvatar] = useState('');*/
-    const [currentUser,setCurrentUser] = useState(useContext(CurrentUserContext)); //use the content of the CurrentUserContext
-    const [cards, setCards] = useState([]);
-
-    useEffect(() => {
-        api.getUserInfo()
-          .then((userData) => {
-            /*setUserName(userData.name);
-            setUserDescription(userData.about);
-            setUserAvatar(userData.avatar);*/
-            setCurrentUser(userData);
-
-          })
-          .catch((err) => console.log(err));
-
-          api.getCards()
-            .then((cardData) => {
-                setCards(cardData);
-            })
-            .catch((err) => console.log(err));
-    }, []);
-
-    function handleCardLike(card) {
-      const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-      api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
-    }
-
-    function handleCardDelete(card) {
-      if(card.owner._id === currentUser._id) {
-      api.deleteCard(card._id).then(() => {
-        setCards((state) => state.filter((c) => c._id !== card._id));
-      });
-    } else {
-      console.log('You can only delete your own cards');
-    }
-  }
+    const currentUser = useContext(CurrentUserContext); //use the content of the CurrentUserContext
+   
 
     return (
     <div className="page">
@@ -72,9 +36,9 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
       </div>
     </div>
     <section className="elements">
-        {cards.map((card) => (
-          <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
-        ))}
+        {cards?.length > 0 ? cards.map((card) => (
+          <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete}/>
+        )) : <p>Nocards available.</p>}
     </section>
     </div>
     );

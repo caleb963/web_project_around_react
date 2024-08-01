@@ -9,6 +9,7 @@ import CurrentUserContext from './components/CurrentUserContext';
 import api from './utils/api';
 import EditProfilePopup from './components/EditProfilePopup';
 import EditAvatarPopup from './components/EditAvatarPopup';
+import AddPlacePopup from './components/AddPlacePopup'
 
 
 function App() {
@@ -18,6 +19,7 @@ const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 const [selectedCard, setSelectedCard] = useState(null);
 const [currentUser, setCurrentUser] = useState({});
+const [cards, setCards] = useState([]);
 
 useEffect(() => {
   api.getUserInfo()
@@ -25,6 +27,13 @@ useEffect(() => {
       setCurrentUser(userData);
     })
     .catch((err) => console.log(err));
+
+
+api.getCards()
+  .then((cardData) => {
+    setCards(cardData);
+  })
+  .catch((err) => console.log(err));
 }, []);
 
 const handleEditAvatarClick = () => {
@@ -67,6 +76,36 @@ const handleUpdateAvatar = (avatarData) => {
     })
     .catch((err) => console.log(err));
 }
+
+
+
+const handleCardLike = (card) => {
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+  api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+    setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+  }).catch((err) => console.log(err));
+}
+
+const handleCardDelete = (card) => {
+  if(card.owner._id === currentUser._id) {
+    api.deleteCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    }).catch((err) => console.log(err));
+  } else {
+    console.log('You can only delete your own cards');
+  }
+}
+
+const handleAddPlaceSubmit = (newCard) => {
+  api.addCard(newCard)
+    .then((addedCard) => {
+      setCards([addedCard, ...cards]);
+      closeAllPopups();
+    })
+    .catch((err) => console.log(err));
+}
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
@@ -93,23 +132,12 @@ const handleUpdateAvatar = (avatarData) => {
         onUpdateAvatar={handleUpdateAvatar}
       />
 
-  
-
-        <PopupWithForm 
-          name='add-card'
-          title='New Place'
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          formId='addcard-form'
-          buttonText='Create'
-          >
-            <input className='popup__input popup__input-name' id='input-card-title' type='text' minLength='2' maxLength='30' placeholder='Title' />
-            <span className='popup-error input-card-title-error'></span>
-            <input className='popup__input popup__input-about' id='input-card-url' type='text' placeholder='url'/>
-            <span className='poopup-error input-card-url-error'></span>
-                      </PopupWithForm>
-
-       
+      <AddPlacePopup 
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+      />
+      
 
   
   </div>
