@@ -47,7 +47,38 @@ deleteCard(cardId) {
         },
     }).then(this._handleResponse);
   }
+
+
+updateUserInfo(data) {
+    return fetch(`${this._adress}/v1/${this._groupId}/users/me`, {
+    method: 'PATCH',
+    headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+    }),
+
+
+}).then(this._handleResponse);
 }
+
+setUserAvatar(data) {
+  return fetch(`${this._adress}/v1/${this.groupId}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+        authorization : this._token,
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        avatar: data.avatar,
+    }),
+        }).then(this._handleResponse);
+  }
+}
+
 
 const api = new Api({
     adress: 'https://around.nomoreparties.co',

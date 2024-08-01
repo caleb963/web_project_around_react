@@ -1,7 +1,6 @@
 import React,{useState,useContext,useEffect} from 'react';
 import PopupWithForm from './PopupWithForm.js';
 import CurrentUserContext from './CurrentUserContext.js';
-import App from '../App.js';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
     const currentUser = useContext(CurrentUserContext);
@@ -38,7 +37,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
           name="name"
           value={name}
           onChange={handleNameChange}
-          className="popup__input"
+          className="popup__input__name "
           placeholder="Name"
           required
           minLength="2"
@@ -49,13 +48,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser}) {
            name="about"
            value={description}
            onChange={handleDescriptionChange}
-           className="popup__input"
+           className="popup__input_about"
            placeholder="About"
            required
               minLength="2"
               maxLength="200"
          />
-        <button type="submit" className="popup__save-button">Save</button>
         </PopupWithForm>
     );
 }
