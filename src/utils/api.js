@@ -80,7 +80,7 @@ setUserAvatar(data) {
 
 
 addCard(data) {
-    return fetch(`${this._adress}/v1/${this.groupId}/cards`, {
+    return fetch(`${this._adress}/v1/${this._groupId}/cards`, {
         method: 'POST',
         headers: {
           authorization: this._token, 

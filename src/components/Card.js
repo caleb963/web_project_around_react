@@ -3,6 +3,7 @@ import CurrentUserContext from './CurrentUserContext.js';
 
 function Card({ card, onCardClick, onCardLike, onCardDelete}) {
 const currentUser = useContext(CurrentUserContext);
+console.log(card);
 
 // class for the button to delete the card
 const isOwn = card.owner._id === currentUser._id;

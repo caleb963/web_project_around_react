@@ -31,10 +31,12 @@ useEffect(() => {
 
 api.getCards()
   .then((cardData) => {
+    console.log(cardData);
     setCards(cardData);
   })
   .catch((err) => console.log(err));
 }, []);
+console.log(cards);
 
 const handleEditAvatarClick = () => {
   setEditAvatarPopupOpen(true);
@@ -115,7 +117,7 @@ const handleAddPlaceSubmit = (newCard) => {
         onAddPlace = {handleAddPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
         onCardClick = {handleCardClick}
-        card={cards}
+        cards={cards}
         onCardLike={handleCardLike}
         onCardDelete={handleCardDelete}
       />
